@@ -30,7 +30,7 @@
     }
     .logo { color:#fff; font-size:30px; font-weight:900; letter-spacing:4px; }
     .logo-sub { color:rgba(255,255,255,0.78); font-size:12px; letter-spacing:1px; margin-top:4px; text-transform:uppercase; }
-    .status-banner { color:#fff; text-align:center; padding:13px 16px; font-size:14px; font-weight:700; }
+    .status-banner { color:#fff; text-align:center; padding:13px 16px; font-size:14px; font-weight:700; letter-spacing:0.3px; }
     .status-banner.loading { background:#f4a261; }
     .status-banner.valid   { background:#00a651; }
     .status-banner.invalid { background:#e63946; }
@@ -54,10 +54,15 @@
     <div class="logo">VEOLIA</div>
     <div class="logo-sub">Badge Verification System</div>
   </div>
-  <div class="status-banner loading" id="banner">⏳&nbsp;&nbsp;Verification in progress...</div>
+
+  <div class="status-banner loading" id="banner">
+    ⏳&nbsp;&nbsp;Verification in progress...
+  </div>
+
   <div class="body">
     <div class="icon-wrap" id="icon"><div class="spinner"></div></div>
     <p class="message" id="message">Please wait...</p>
+
     <div class="details" id="details">
       <div class="row">
         <span class="label">👤 Name</span>
@@ -73,6 +78,7 @@
       </div>
     </div>
   </div>
+
   <div class="footer">
     <p>Official Veolia HR verification system.</p>
     <p>Questions? <a href="mailto:hr@veolia.com">hr@veolia.com</a></p>
@@ -80,28 +86,42 @@
 </div>
 
 <script>
-  // ← URL de ton Cloudflare Worker
+  // ← URL de ton Cloudflare Worker (à remplacer après déploiement)
   const WORKER_URL = 'https://veolia-badge-verify.TON_SOUS_DOMAINE.workers.dev';
 
   function getParam(name) {
     return new URL(window.location.href).searchParams.get(name) || '';
   }
+
   function escHtml(str) {
-    return (str||'').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');
+    return (str || '')
+      .replace(/&/g,'&amp;').replace(/</g,'&lt;')
+      .replace(/>/g,'&gt;').replace(/"/g,'&quot;');
   }
+
   function formatDate(d) {
-    return d.toLocaleDateString('en-GB', {day:'2-digit',month:'short',year:'numeric',hour:'2-digit',minute:'2-digit'});
+    return d.toLocaleDateString('en-GB', {
+      day:'2-digit', month:'short', year:'numeric',
+      hour:'2-digit', minute:'2-digit'
+    });
   }
 
   function showResult(isValid, name) {
     const color = isValid ? '#00a651' : '#e63946';
+
     const banner = document.getElementById('banner');
     banner.className = 'status-banner ' + (isValid ? 'valid' : 'invalid');
-    banner.innerHTML = isValid ? '✅&nbsp;&nbsp;Badge verified and active' : '❌&nbsp;&nbsp;Badge not recognized or inactive';
-    document.getElementById('icon').innerHTML = '<span style="font-size:64px">' + (isValid ? '🪪' : '⚠️') + '</span>';
+    banner.innerHTML = isValid
+      ? '✅&nbsp;&nbsp;Badge verified and active'
+      : '❌&nbsp;&nbsp;Badge not recognized or inactive';
+
+    document.getElementById('icon').innerHTML =
+      '<span style="font-size:64px">' + (isValid ? '🪪' : '⚠️') + '</span>';
+
     document.getElementById('message').innerHTML = isValid
       ? '<strong>' + escHtml(name) + '</strong> is currently working at Veolia.'
       : 'This badge could not be verified.<br><span style="font-size:14px;color:#888">Please contact HR if you think this is an error.</span>';
+
     document.getElementById('d-name').textContent   = name || '—';
     document.getElementById('d-date').textContent   = formatDate(new Date());
     document.getElementById('d-status').textContent = isValid ? 'Active' : 'Invalid';
@@ -110,10 +130,10 @@
   }
 
   function showError(msg) {
-    document.getElementById('banner').className  = 'status-banner invalid';
-    document.getElementById('banner').innerHTML  = '⚠️&nbsp;&nbsp;Verification error';
-    document.getElementById('icon').innerHTML    = '<span style="font-size:64px">🔗</span>';
-    document.getElementById('message').textContent = msg || 'Invalid link.';
+    document.getElementById('banner').className    = 'status-banner invalid';
+    document.getElementById('banner').innerHTML    = '⚠️&nbsp;&nbsp;Verification error';
+    document.getElementById('icon').innerHTML      = '<span style="font-size:64px">🔗</span>';
+    document.getElementById('message').textContent = msg || 'Invalid link. Please scan the QR code directly from the badge.';
   }
 
   const uid       = getParam('uid');
@@ -123,11 +143,10 @@
   if (!uid || !matricule) {
     showError('Invalid or incomplete verification link.');
   } else {
-    // Appel au Worker Cloudflare (pas au sheet directement → RGPD OK)
     fetch(WORKER_URL + '?uid=' + encodeURIComponent(uid) + '&matricule=' + encodeURIComponent(matricule))
       .then(r => r.json())
       .then(data => showResult(data.valid === true, name))
-      .catch(() => showError('Verification service temporarily unavailable.'));
+      .catch(() => showError('Verification service temporarily unavailable. Please try again later.'));
   }
 </script>
 </body>
