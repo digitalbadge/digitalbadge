@@ -86,19 +86,15 @@
 </div>
 
 <script>
-  // ← URL de ton Cloudflare Worker (à remplacer après déploiement)
-  const WORKER_URL = 'https://veolia-badge-verify.TON_SOUS_DOMAINE.workers.dev';
+  // ✅ URL du Cloudflare Worker
+  const WORKER_URL = 'https://digitalbadge-verify.colletrodo.workers.dev';
 
   function getParam(name) {
     return new URL(window.location.href).searchParams.get(name) || '';
   }
-
   function escHtml(str) {
-    return (str || '')
-      .replace(/&/g,'&amp;').replace(/</g,'&lt;')
-      .replace(/>/g,'&gt;').replace(/"/g,'&quot;');
+    return (str||'').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');
   }
-
   function formatDate(d) {
     return d.toLocaleDateString('en-GB', {
       day:'2-digit', month:'short', year:'numeric',
@@ -108,20 +104,16 @@
 
   function showResult(isValid, name) {
     const color = isValid ? '#00a651' : '#e63946';
-
     const banner = document.getElementById('banner');
     banner.className = 'status-banner ' + (isValid ? 'valid' : 'invalid');
     banner.innerHTML = isValid
       ? '✅&nbsp;&nbsp;Badge verified and active'
       : '❌&nbsp;&nbsp;Badge not recognized or inactive';
-
     document.getElementById('icon').innerHTML =
       '<span style="font-size:64px">' + (isValid ? '🪪' : '⚠️') + '</span>';
-
     document.getElementById('message').innerHTML = isValid
       ? '<strong>' + escHtml(name) + '</strong> is currently working at Veolia.'
       : 'This badge could not be verified.<br><span style="font-size:14px;color:#888">Please contact HR if you think this is an error.</span>';
-
     document.getElementById('d-name').textContent   = name || '—';
     document.getElementById('d-date').textContent   = formatDate(new Date());
     document.getElementById('d-status').textContent = isValid ? 'Active' : 'Invalid';
