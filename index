@@ -6,7 +6,6 @@
   <title>Veolia - Badge Verification</title>
   <style>
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-
     body {
       font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Arial, sans-serif;
       background: linear-gradient(135deg, #e8f5e9 0%, #f0f4f8 100%);
@@ -16,7 +15,6 @@
       justify-content: center;
       padding: 20px;
     }
-
     .card {
       background: #fff;
       border-radius: 24px;
@@ -25,135 +23,45 @@
       width: 100%;
       overflow: hidden;
     }
-
     .header {
       background: linear-gradient(135deg, #00a651 0%, #007a3d 100%);
       padding: 30px 24px 22px;
       text-align: center;
     }
-    .logo {
-      color: #fff;
-      font-size: 30px;
-      font-weight: 900;
-      letter-spacing: 4px;
-    }
-    .logo-sub {
-      color: rgba(255,255,255,0.78);
-      font-size: 12px;
-      letter-spacing: 1px;
-      margin-top: 4px;
-      text-transform: uppercase;
-    }
-
-    .status-banner {
-      color: #fff;
-      text-align: center;
-      padding: 13px 16px;
-      font-size: 14px;
-      font-weight: 700;
-      letter-spacing: 0.3px;
-      background: #888;
-    }
-    .status-banner.valid   { background: #00a651; }
-    .status-banner.invalid { background: #e63946; }
-    .status-banner.loading { background: #f4a261; }
-
-    .body {
-      padding: 30px 26px 22px;
-    }
-    .icon-wrap {
-      text-align: center;
-      font-size: 64px;
-      line-height: 1;
-      margin-bottom: 18px;
-    }
-    .message {
-      text-align: center;
-      font-size: 16px;
-      color: #1a1a2e;
-      line-height: 1.7;
-      margin-bottom: 26px;
-    }
-
-    .details {
-      background: #f7f9fc;
-      border: 1px solid #e8ecf2;
-      border-radius: 14px;
-      padding: 4px 20px;
-      display: none;
-    }
-    .row {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      padding: 13px 0;
-      border-bottom: 1px solid #edf0f5;
-      gap: 12px;
-    }
-    .row:last-child { border-bottom: none; }
-    .label {
-      color: #8a94a6;
-      font-size: 13px;
-      font-weight: 500;
-      white-space: nowrap;
-    }
-    .value {
-      color: #1a1a2e;
-      font-size: 14px;
-      font-weight: 600;
-      text-align: right;
-      word-break: break-word;
-    }
-
-    .footer {
-      background: #f7f9fc;
-      border-top: 1px solid #edf0f5;
-      text-align: center;
-      padding: 14px 24px;
-      font-size: 12px;
-      color: #aab0bc;
-      line-height: 1.7;
-    }
-    .footer a { color: #00a651; text-decoration: none; font-weight: 600; }
-
-    /* Spinner */
-    .spinner {
-      width: 48px; height: 48px;
-      border: 5px solid #e8ecf2;
-      border-top-color: #00a651;
-      border-radius: 50%;
-      animation: spin 0.8s linear infinite;
-      margin: 0 auto 18px;
-    }
-    @keyframes spin { to { transform: rotate(360deg); } }
+    .logo { color:#fff; font-size:30px; font-weight:900; letter-spacing:4px; }
+    .logo-sub { color:rgba(255,255,255,0.78); font-size:12px; letter-spacing:1px; margin-top:4px; text-transform:uppercase; }
+    .status-banner { color:#fff; text-align:center; padding:13px 16px; font-size:14px; font-weight:700; }
+    .status-banner.loading { background:#f4a261; }
+    .status-banner.valid   { background:#00a651; }
+    .status-banner.invalid { background:#e63946; }
+    .body { padding:30px 26px 22px; }
+    .icon-wrap { text-align:center; font-size:64px; line-height:1; margin-bottom:18px; }
+    .message { text-align:center; font-size:16px; color:#1a1a2e; line-height:1.7; margin-bottom:26px; }
+    .details { background:#f7f9fc; border:1px solid #e8ecf2; border-radius:14px; padding:4px 20px; display:none; }
+    .row { display:flex; justify-content:space-between; align-items:center; padding:13px 0; border-bottom:1px solid #edf0f5; gap:12px; }
+    .row:last-child { border-bottom:none; }
+    .label { color:#8a94a6; font-size:13px; font-weight:500; white-space:nowrap; }
+    .value { color:#1a1a2e; font-size:14px; font-weight:600; text-align:right; word-break:break-word; }
+    .footer { background:#f7f9fc; border-top:1px solid #edf0f5; text-align:center; padding:14px 24px; font-size:12px; color:#aab0bc; line-height:1.7; }
+    .footer a { color:#00a651; text-decoration:none; font-weight:600; }
+    .spinner { width:48px; height:48px; border:5px solid #e8ecf2; border-top-color:#00a651; border-radius:50%; animation:spin 0.8s linear infinite; margin:0 auto; }
+    @keyframes spin { to { transform:rotate(360deg); } }
   </style>
 </head>
 <body>
 <div class="card">
-
   <div class="header">
     <div class="logo">VEOLIA</div>
     <div class="logo-sub">Badge Verification System</div>
   </div>
-
-  <div class="status-banner loading" id="banner">
-    ⏳&nbsp;&nbsp;Verification in progress...
-  </div>
-
+  <div class="status-banner loading" id="banner">⏳&nbsp;&nbsp;Verification in progress...</div>
   <div class="body">
-    <div id="icon-wrap" class="icon-wrap">
-      <div class="spinner"></div>
-    </div>
+    <div class="icon-wrap" id="icon"><div class="spinner"></div></div>
     <p class="message" id="message">Please wait...</p>
-
     <div class="details" id="details">
       <div class="row">
         <span class="label">👤 Name</span>
         <span class="value" id="d-name">—</span>
-      </div>
-      <div class="row">
-        <span class="label">🪪 Matricule</span>
-        <span class="value" id="d-mat">—</span>
       </div>
       <div class="row">
         <span class="label">🕐 Checked on</span>
@@ -165,92 +73,61 @@
       </div>
     </div>
   </div>
-
   <div class="footer">
     <p>Official Veolia HR verification system.</p>
     <p>Questions? <a href="mailto:hr@veolia.com">hr@veolia.com</a></p>
   </div>
-
 </div>
 
 <script>
-  // ← Remplace par l'URL de ton Apps Script déployé (même domaine Veolia, c'est ok)
-  const APPS_SCRIPT_URL = 'https://script.google.com/a/macros/veolia.com/s/TON_DEPLOYMENT_ID/exec';
+  // ← URL de ton Cloudflare Worker
+  const WORKER_URL = 'https://veolia-badge-verify.TON_SOUS_DOMAINE.workers.dev';
 
   function getParam(name) {
-    const url = new URL(window.location.href);
-    return url.searchParams.get(name) || '';
+    return new URL(window.location.href).searchParams.get(name) || '';
   }
-
+  function escHtml(str) {
+    return (str||'').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');
+  }
   function formatDate(d) {
-    return d.toLocaleDateString('en-GB', {
-      day: '2-digit', month: 'short', year: 'numeric',
-      hour: '2-digit', minute: '2-digit'
-    });
+    return d.toLocaleDateString('en-GB', {day:'2-digit',month:'short',year:'numeric',hour:'2-digit',minute:'2-digit'});
   }
 
-  function showResult(isValid, name, matricule) {
-    const banner  = document.getElementById('banner');
-    const iconWrap= document.getElementById('icon-wrap');
-    const message = document.getElementById('message');
-    const details = document.getElementById('details');
-
-    document.getElementById('d-name').textContent   = name       || '—';
-    document.getElementById('d-mat').textContent    = matricule  || '—';
+  function showResult(isValid, name) {
+    const color = isValid ? '#00a651' : '#e63946';
+    const banner = document.getElementById('banner');
+    banner.className = 'status-banner ' + (isValid ? 'valid' : 'invalid');
+    banner.innerHTML = isValid ? '✅&nbsp;&nbsp;Badge verified and active' : '❌&nbsp;&nbsp;Badge not recognized or inactive';
+    document.getElementById('icon').innerHTML = '<span style="font-size:64px">' + (isValid ? '🪪' : '⚠️') + '</span>';
+    document.getElementById('message').innerHTML = isValid
+      ? '<strong>' + escHtml(name) + '</strong> is currently working at Veolia.'
+      : 'This badge could not be verified.<br><span style="font-size:14px;color:#888">Please contact HR if you think this is an error.</span>';
+    document.getElementById('d-name').textContent   = name || '—';
     document.getElementById('d-date').textContent   = formatDate(new Date());
     document.getElementById('d-status').textContent = isValid ? 'Active' : 'Invalid';
-    document.getElementById('d-status').style.color = isValid ? '#00a651' : '#e63946';
-
-    details.style.display = 'block';
-
-    if (isValid) {
-      banner.className        = 'status-banner valid';
-      banner.innerHTML        = '✅&nbsp;&nbsp;Badge verified and active';
-      iconWrap.innerHTML      = '<span style="font-size:64px">🪪</span>';
-      message.innerHTML       = '<strong>' + escHtml(name) + '</strong> is currently working at Veolia.';
-    } else {
-      banner.className        = 'status-banner invalid';
-      banner.innerHTML        = '❌&nbsp;&nbsp;Badge not recognized or inactive';
-      iconWrap.innerHTML      = '<span style="font-size:64px">⚠️</span>';
-      message.innerHTML       = 'This badge could not be verified.<br><span style="font-size:14px;color:#888">Please contact HR if you think this is an error.</span>';
-    }
+    document.getElementById('d-status').style.color = color;
+    document.getElementById('details').style.display = 'block';
   }
 
-  function showError() {
-    document.getElementById('banner').className   = 'status-banner invalid';
-    document.getElementById('banner').innerHTML   = '⚠️&nbsp;&nbsp;Verification error';
-    document.getElementById('icon-wrap').innerHTML= '<span style="font-size:64px">🔗</span>';
-    document.getElementById('message').textContent= 'Invalid or incomplete link. Please scan the QR code directly from the badge.';
+  function showError(msg) {
+    document.getElementById('banner').className  = 'status-banner invalid';
+    document.getElementById('banner').innerHTML  = '⚠️&nbsp;&nbsp;Verification error';
+    document.getElementById('icon').innerHTML    = '<span style="font-size:64px">🔗</span>';
+    document.getElementById('message').textContent = msg || 'Invalid link.';
   }
 
-  function escHtml(str) {
-    return (str || '').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');
-  }
-
-  // ── Main ──────────────────────────────────────────────────────────────────
   const uid       = getParam('uid');
   const name      = getParam('name');
   const matricule = getParam('matricule');
 
-  if (!uid && !matricule) {
-    showError();
+  if (!uid || !matricule) {
+    showError('Invalid or incomplete verification link.');
   } else {
-    // Appel vers Apps Script (JSON)
-    const apiUrl = APPS_SCRIPT_URL
-      + '?action=verify'
-      + '&uid='       + encodeURIComponent(uid)
-      + '&matricule=' + encodeURIComponent(matricule);
-
-    fetch(apiUrl)
+    // Appel au Worker Cloudflare (pas au sheet directement → RGPD OK)
+    fetch(WORKER_URL + '?uid=' + encodeURIComponent(uid) + '&matricule=' + encodeURIComponent(matricule))
       .then(r => r.json())
-      .then(data => {
-        showResult(data.valid === true, name, matricule);
-      })
-      .catch(() => {
-        // Si fetch échoue (CORS etc.), fallback: on affiche quand même le nom
-        // mais on ne peut pas vérifier → on affiche invalide
-        showResult(false, name, matricule);
-      });
+      .then(data => showResult(data.valid === true, name))
+      .catch(() => showError('Verification service temporarily unavailable.'));
   }
 </script>
 </body>
